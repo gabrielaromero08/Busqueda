@@ -4,20 +4,9 @@ document.getElementById('searchDiagnosisForm').addEventListener('submit', functi
   const system = document.getElementById('searchSystem').value;
   const value = document.getElementById('searchValue').value;
 
-  // Paso 1: Buscar paciente por sistema y número de documento
-  fetch(`https://hl7-fhir-ehr-gabriela-787.onrender.com/patient?system=${encodeURIComponent(system)}&value=${encodeURIComponent(value)}`)
-    .then(response => {
-      if (response.status === 204) {
-        throw new Error('❌ No se encontró un paciente con ese documento.');
-      }
-      return response.json();
-    })
-    .then(patient => {
-      const patientId = patient.id;
-
-      // Paso 2: Buscar diagnósticos (conditions) del paciente
-      return fetch(`https://hl7-fhir-ehr-gabriela-787.onrender.com/condition?patient=Patient/${patientId}`);
-    })
+  // Buscar diagnósticos usando solo el número de identificación (identifier)
+  // Ajusta la URL según cómo tu API espera el parámetro (por ejemplo: patient.identifier)
+  fetch(`https://hl7-fhir-ehr-gabriela-787.onrender.com/condition?patient.identifier=${encodeURIComponent(system)}|${encodeURIComponent(value)}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('❌ Error al consultar diagnósticos del paciente.');
