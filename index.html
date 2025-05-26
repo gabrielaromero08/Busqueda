@@ -2,27 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Buscar Diagnóstico del Paciente</title>
+  <title>Buscar Diagnósticos</title>
 </head>
 <body>
-
-  <h2>Buscar Diagnóstico por Documento</h2>
-
+  <h2>Buscar Diagnósticos por Identificación</h2>
+  
   <form id="searchDiagnosisForm">
-    <label for="searchSystem">Sistema de Identificación:</label><br>
-    <input type="text" id="searchSystem" placeholder="Ej: http://hospital.org/dni" required><br><br>
+    <label for="searchSystem">Sistema de identificación:</label><br>
+    <input type="text" id="searchSystem" placeholder="Ej: http://cedula" required><br><br>
 
-    <label for="searchValue">Número de Documento:</label><br>
+    <label for="searchValue">Número de identificación:</label><br>
     <input type="text" id="searchValue" placeholder="Ej: 12345678" required><br><br>
 
-    <button type="submit">Buscar Diagnósticos</button>
+    <button type="submit">Buscar diagnóstico</button>
   </form>
 
-  <hr>
-
-  <div id="diagnosisResults"></div>
+  <div id="diagnosisResults" style="margin-top: 20px;"></div>
 
   <!-- Enlace al archivo JavaScript -->
-  <script src="Busqueda.js"></script>
+  <script src="buscarDiagnosticos.js"></script>
 </body>
 </html>
+
