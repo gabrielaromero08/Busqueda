@@ -1,15 +1,24 @@
 document.getElementById('searchDiagnosisForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
-  const system = document.getElementById('searchSystem').value;
-  const value = document.getElementById('searchValue').value;
+  const system = document.getElementById('searchSystem').value.trim();
+  const value = document.getElementById('searchValue').value.trim();
 
-  // Buscar diagnósticos usando solo el número de identificación (identifier)
-  // Ajusta la URL según cómo tu API espera el parámetro (por ejemplo: patient.identifier)
-  fetch(`https://hl7-fhir-ehr-gabriela-787.onrender.com/condition?patient.identifier=${encodeURIComponent(system)}|${encodeURIComponent(value)}`)
-    .then(response => {
+  // Validar campos antes de hacer la solicitud
+  if (!system || !value) {
+    alert('⚠️ Por favor completa ambos campos: sistema e identificación.');
+    return;
+  }
+
+  const apiUrl = `https://hl7-fhir-ehr-gabriela-787.onrender.com/condition?patient.identifier=${encodeURIComponent(system)}|${encodeURIComponent(value)}`;
+  console.log("🔍 Consultando diagnósticos en:", apiUrl);
+
+  fetch(apiUrl)
+    .then(async response => {
       if (!response.ok) {
-        throw new Error('❌ Error al consultar diagnósticos del paciente.');
+        const errorText = await response.text();
+        console.error("❌ Error del servidor:", errorText);
+        throw new Error(`❌ Error al consultar diagnósticos del paciente. Código HTTP: ${response.status}`);
       }
       return response.json();
     })
@@ -39,7 +48,6 @@ document.getElementById('searchDiagnosisForm').addEventListener('submit', functi
     })
     .catch(error => {
       alert(error.message);
-      console.error(error);
+      console.error("❗ Error al procesar la solicitud:", error);
     });
 });
-
