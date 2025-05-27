@@ -10,7 +10,8 @@ document.getElementById('searchDiagnosisForm').addEventListener('submit', functi
     return;
   }
 
-  const apiUrl = `https://hl7-fhir-ehr-gabriela-787.onrender.com/condition?patient.identifier=${encodeURIComponent(system)}|${encodeURIComponent(value)}`;
+  const apiUrl = `https://hl7-fhir-ehr-gabriela-787.onrender.com/condition?system=${encodeURIComponent(system)}&value=${encodeURIComponent(value)}`;
+
   console.log("🔍 Consultando diagnósticos en:", apiUrl);
 
   fetch(apiUrl)
